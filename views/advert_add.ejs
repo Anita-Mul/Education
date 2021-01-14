@@ -1,0 +1,88 @@
+{% extends "layout.ejs" %}
+
+{% block style %}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="body advert">
+        <!-- 面包屑 -->
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">广告管理</a></li>
+            <li class="active">添加广告</li>
+        </ol>
+        <div class="advert-add">
+            <!-- 更改表单提交方式 -->
+            <form action="/advert/add" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">标题</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control input-sm" name="title" placeholder="填写广告标题">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">图片</label>
+                    <div class="col-md-5">
+                        <input type="file" class="form-control input-sm" name="images" placeholder="填写广告图片">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">链接</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control input-sm" name="link" placeholder="填写链接">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">开始时间</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control input-sm" name="start_time" placeholder="填写开始时间">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">结束时间</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control input-sm" name="end_time" placeholder="填写结束时间">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input type='submit' class="btn btn-success btn-sm pull-right" value="保存"></input>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    //把表单同步提交变成异步提交,这段代码啥意思
+    $('form').on('submit', function (e) {
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: new FormData($(this)[0]),
+
+            //当你的data选项被提交为一个FormData对象的时候,一定要将processData配置为false
+            //否则jQuery提交不生效
+            processData: false,  //tell jQuery not to process the data
+            //当提交一个FormData对象的时候,记得要将contentType设置为false
+            //否则jQuery会默认把Content-Type设置为application/x-www-form-urlence
+            contentType: false, //telljQuery not to set contentType
+
+            success: function (data) {
+                if (data.err_code === 0) {
+                    window.location.href = '/advert';
+                }
+            }
+        })
+        return false;
+    })
+</script>
+{% endblock %}
