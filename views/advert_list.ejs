@@ -46,45 +46,92 @@
                         <th>操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {%for items in adverts%}
-                    <tr>
-                        <td>0</td>
-                        <td>{{items.title}}</td>
-                        <td>
-                            <img src="../public/images/{{items.images}}" style="width:100px;" alt="">
-                        </td>
-                        <td>{{items.link}}</td>
-                        <td>{{items.start_time}}</td>
-                        <td>{{items.endtime}}</td>
-                        <td>1</td>
+                <tbody id="tbody">
 
-                        <td>
-                            <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr>
-                    {%endfor%}
                 </tbody>
             </table>
         </div>
 
     </div>
     <!-- 分页 -->
-    <ul class="pagination pull-right">
-        <li><a href="/advert?page={{page - 1}}">上一页</a></li>
-        {%for i in range(1, totalPage) -%}
-        {% if page === i%}
-        <li class="active"><a href="/advert?page={{i}}">{{i}}</a></li>
-        {%else%}
-        <li><a href="/advert?page={{i}}">{{i}}</a></li>
-        {%endif%}
-        {%- endfor%}
-        <li><a href="/advert?page={{page + 1}}">下一页</a></li>
+    <ul class="pagination pull-right" id="pagination">
+        <!-- <li><a href="/advert">上一页</a></li>
+        <li><a href="/advert">1</a></li>
+        <li><a href="/advert">2</a></li>
+        <li><a href="/advert">3</a></li>
+        <li><a href="/advert">4</a></li>
+        <li><a href="/advert">下一页</a></li> -->
     </ul>
 </div>
 </div>
+<script type="text/template" id="tpl">
+<% adverts.forEach(function(items, index){ %>
+    <tr>
+        <td><%= index + 1 %></td>
+        <td><%= items.title %></td>
+        <td>
+            <img src="../public/images/<%=items.images%>" style="width:100px;" alt="">
+        </td>
+        <td><%= items.link %></td>
+        <td><%= items.start_time %></td>
+        <td><%= items.endtime %></td>
+        <td>1</td>
+    
+        <td>
+            <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
+            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+        </td>
+    </tr>
+<% }) %>
+</script>
 {% endblock %}
 
 {% block script %}
+<script src="../node_modules/art-template/dist/template-native.js"></script>
+<script src="../node_modules/twbs-pagination/jquery.twbsPagination.js"></script>
+<script>
+    var pageSize = 5;
+    $.ajax({
+        url: '/advert/count',
+        type: 'get',
+        success: function (data) {
+            if (data.err_code === 0) {
+                $('#pagination').twbsPagination({
+                    totalPages: Math.ceil(data.result / pageSize), //告诉这个插件一共有多少页
+                    visiblePages: 5, //试图可见页码
+                    first: '首页',
+                    prev: '上一页',
+                    next: '下一页',
+                    last: '最后一页',
+                    onPageClick: function (event, page) {
+                        //当点击某个页码的时候要执行的回调处理函数,所谓的异步无刷新分页
+                        //本质上就是当点击某一页的时候,发起一个ajax异步请求,获取当前页码对应的数据,然后在客户端做渲染
+                        loadData(page);
+                    }
+                });
+            }
+        }
+    });
+
+    function loadData(page) {
+        $.ajax({
+            url: '/advert/list',
+            type: 'get',
+            data: {
+                page: page,
+                pageSize: pageSize
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.err_code === 0) {
+                    //就是上面那个tpl
+                    var htmlStr = template('tpl', {
+                        adverts: data.result  //在advert.js里就是adverts
+                    })
+                    $('#tbody').html(htmlStr);
+                }
+            }
+        })
+    }
+</script>
 {% endblock %}
