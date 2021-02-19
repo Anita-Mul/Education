@@ -1,9 +1,9 @@
-{% extends "layout.ejs" %}
+{{ extend './layout.html' }}
 
-{% block style %}
-{% endblock %}
+{{ block 'style' }}
+{{ /block }}
 
-{% block body %}
+{{ block 'body' }}
 <div class="container-fluid">
     <div class="body advert">
         <!-- 面包屑 -->
@@ -58,9 +58,9 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{{ /block }}
 
-{% block script %}
+{{ block 'script' }}
 <script>
     //把表单同步提交变成异步提交,这段代码啥意思
     $('form').on('submit', function (e) {
@@ -85,4 +85,4 @@
         return false;
     })
 </script>
-{% endblock %}
+{{ /block }}

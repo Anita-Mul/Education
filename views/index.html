@@ -1,9 +1,9 @@
-{% extends "layout.ejs" %}
+{{ extend './layout.html' }}
 
-{% block style %}
-{% endblock %}
+{{ block 'style' }}
+{{ /block }}
 
-{% block body %}
+{{ block 'body' }}
 <!-- 其它页面自已调整吧 -->
 <div class="container-fluid">
     <!-- 个人资料 -->
@@ -45,9 +45,9 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{{ /block }}
 
-{% block script %}
+{{ block 'style' }}
 <!-- 百度开源的图表库 -->
 <script src="node_modules/echarts/dist/echarts.js"></script>
 <script>
@@ -79,4 +79,4 @@
     myChart.setOption(option);
 
 </script>
-{% endblock %}
+{{ /block }}

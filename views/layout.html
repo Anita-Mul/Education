@@ -12,24 +12,24 @@
     <link rel="stylesheet" href="../node_modules/nprogress/nprogress.css">
     <!-- less样式入口文件 -->
     <link rel="stylesheet" href="../public/less/index.css">
-    {% block style %}
-    {% endblock %}
+    {{ block 'style' }}
+    {{ /block }}
 </head>
 
 <body>
-    {% include "header.html"%}
+    {{ include './header.html' }}
     <!-- 主体 -->
     <div class="main">
-        {% include "sidebar.html"%}
-        {% block body %}
-        {% endblock %}
+        {{ include "./sidebar.html" }}
+        {{ block 'body' }}
+        {{ /block }}
     </div>
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../node_modules/nprogress/nprogress.js"></script>
     <script src="../public/js/common.js"></script>
-    {% block script %}
-    {% endblock %}
+    {{ block 'script' }}
+    {{ /block }}
 </body>
 
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../node_modules/jquery/dist/jquery.js"></script>
+  <script src="../node_modules/art-template/lib/template-web.js"></script>
+</head>
+<body>
+    <div id="tbody">
+
+    </div>
+</div>
+</div>
+
+<script type="text/template" id="tpl">
+    {{lala}}ssss
+    <!-- {{each adverts}}
+    <tr>
+        <td>{{$index + 1}}</td>
+        <td>{{$value.title}}</td>
+        <td>
+            <img src="../public/images/{{$value.images}}" style="width:100px;" alt="">
+        </td>
+        <td>{{$value.link}}</td>
+        <td>{{$value.start_time}}</td>
+        <td>{{$value.endtime}}</td>
+        <td>1</td>
+
+        <td>
+            <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
+            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+        </td>
+    </tr>
+    {{/each}} -->
+</script>
+</body>
+
+
+<script>
+    
+        $.ajax({
+            url: '/advert/list',
+            type: 'get',
+            data: {
+                page: 5,
+                pageSize: 2,
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.err_code === 0) {
+                    //就是上面那个tpl
+                    // console.log(data);
+                    // console.log(template);
+                    var htmlStr = template('tpl',{
+                        lala:"Anita",
+                        // adverts:data.result  //在advert.js里就是adverts
+                    });
+                    console.log(htmlStr);
+                    $('#tbody').html(htmlStr);
+                }
+            }
+        })
+    
+</script>
+</html>
