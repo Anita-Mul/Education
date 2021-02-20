@@ -23,8 +23,8 @@ router.get('/advert/count/', (req, res, next) => {
 
 //渲染advert_list首页
 router.get('/advert', (req, res, next) => {
-    // res.render('advert_list.html');
-    res.render('test.html');
+    res.render('advert_list.html');
+    // res.render('test.html');
     // const page = Number.parseInt(req.query.page, 10);
     // const pageSize = 5;
     // Advert

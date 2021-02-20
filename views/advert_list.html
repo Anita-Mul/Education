@@ -65,8 +65,8 @@
 </div>
 </div>
 
+<!-- ————————————————————————————————重点看这里开始—————————————————————————————————— -->
 <script type="text/template" id="tpl">
-    {{lala}}
     {{each adverts}}
     <tr>
         <td>{{$index + 1}}</td>
@@ -76,7 +76,7 @@
         </td>
         <td>{{$value.link}}</td>
         <td>{{$value.start_time}}</td>
-        <td>{{$value.endtime}}</td>
+        <td>{{$value.end_time}}</td>
         <td>1</td>
 
         <td>
@@ -86,6 +86,7 @@
     </tr>
     {{/each}}
 </script>
+<!-- ————————————————————————————————重点看这里结束—————————————————————————————————— -->
 
 {{ /block }}
 
@@ -118,6 +119,7 @@
         }
     });
 
+// ————————————————————————————————重点看这里开始——————————————————————————————————
     function loadData(page) {
         $.ajax({
             url: '/advert/list',
@@ -127,14 +129,13 @@
                 pageSize: pageSize
             },
             dataType: 'json',
-            success: function (data) {
+            async: false,
+            success: async function (data) {
                 if (data.err_code === 0) {
-                    //就是上面那个tpl
                     console.log(data);
                     console.log(template);
-                    var htmlStr = template('tpl',{
-                        lala:"Anita",
-                        adverts:data.result  //在advert.js里就是adverts
+                    var htmlStr = await template("tpl",{
+                        adverts:data.result  
                     });
                     console.log(htmlStr);
                     $('#tbody').html(htmlStr);
@@ -142,5 +143,6 @@
             }
         })
     }
+// ————————————————————————————————重点看这里结束——————————————————————————————————
 </script>
 {{ /block }}
