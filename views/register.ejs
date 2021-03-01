@@ -1,0 +1,39 @@
+{% extends "layout/no_header_siderbar.ejs" %}
+
+{% block style %}
+{% endblock %}
+
+{% block body %}
+<div class="login">
+    <div class="login-wrap" style="height:400px; border-radius: 20px">
+        <div class="avatar">
+            <img src="public/uploads/monkey.png" class="img-circle" alt="">
+        </div>
+        <form action="/register" method="post" class="col-md-offset-1 col-md-10">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <i class="fa fa-user"></i>
+                </span>
+                <input type="text" class="form-control" placeholder="用户名" name="userName">
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <i class="fa fa-key"></i>
+                </span>
+                <input type="password" class="form-control" placeholder="密码" name="passWord">
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <i class="fa fa-envelope-open"></i>
+                </span>
+                <input type="email" class="form-control" placeholder="邮箱" name="userEmail">
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">注 册</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
